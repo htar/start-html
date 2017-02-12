@@ -9,7 +9,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),//minify-js
     pump = require('pump'),
     imagemin = require('gulp-imagemin'),//minify image
-    jshint = require('gulp-jshint'),//js hint
+    // jshint = require('gulp-jshint'),//js hint
   	stylish = require('jshint-stylish'),//js hint
     rename = require("gulp-rename"),
     autoprefixer = require('gulp-autoprefixer'),
@@ -26,11 +26,11 @@ var gulp = require('gulp'),
 //watcher
 
 // js Hint
-gulp.task('jshint', function(){
-    gulp.src('dist/js/index.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish')); // other argument 'default'
-})
+// gulp.task('jshint', function(){
+//     gulp.src('dist/js/index.js')
+//     .pipe(jshint())
+//     .pipe(jshint.reporter('jshint-stylish')); // other argument 'default'
+// })
 
 // minify image
 gulp.task('minify-image', function(){
