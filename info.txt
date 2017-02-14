@@ -1,7 +1,23 @@
+https://mozilla.github.io/nunjucks/templating.html
+
+
 {% set activeClass = "blog" %}
 {% include "bakery-header.html" %}
 {% set src = "img/" %}
 {%if activeJs == 'parallax' %} <script src="js/jquery.scrolling-parallax.js"></script>{% endif %}
+
+{% set transparentMenu = {class: 'header_trans-fixed header_top_bg' } %} 
+{{transparentMenu.class}}
+
+
+{% if top_header %}top-menu{% else %}right-menu{% endif %}
+
+<% for item in items %>
+  <li><$ item $></li>
+<% endfor %>
+
+
+{% if hungry %}  I am hungry{% elif tired %}  I am tired{% else %}  I am good!{% endif %}
 
 .global-container {
     margin-top: 60px;
@@ -16,6 +32,20 @@
 
 
 
+
+$('.menu-item:not(.menu-item-has-children) > a').each(function() {
+
+	$(this).on('click touch touchend', function(e) {
+		var el = $(this);
+		var link = el.attr('href');
+
+		function tolocation() {
+			window.location = link;
+		}
+		setTimeout(tolocation, 600);
+	});
+
+});
 
 
 count
