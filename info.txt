@@ -12,6 +12,10 @@ https://mozilla.github.io/nunjucks/templating.html
 
 {% if top_header %}top-menu{% else %}right-menu{% endif %}
 
+
+{% set top_header = true %}
+
+
 <% for item in items %>
   <li><$ item $></li>
 <% endfor %>
