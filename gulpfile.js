@@ -12,6 +12,7 @@ var gulp = require('gulp'),
     // jshint = require('gulp-jshint'),//js hint
     stylish = require('jshint-stylish'), //js hint
     rename = require("gulp-rename"),
+    fs = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
     combineMq = require('gulp-combine-mq'), //merge all @media
     sourcemaps = require('gulp-sourcemaps'); // shows in the browser links to styles line in scss
@@ -102,11 +103,19 @@ gulp.task('sass', function() {
         .pipe(browserSync.stream()); //inject css
 });
 
+
+//function  that we add data   on start new page 
+function loadData(data_file) {
+    var content = fs.readFileSync(data_file);
+    return JSON.parse(content)
+}
+
 //nunjucks template + htmlbeautify
 gulp.task('nunjucks', function() {
     return gulp.src('src/pages/**/*.html')
         .pipe(plumber())
         .pipe(nunjucksRender({
+             data: loadData('src/templates/data/template_data.json'),
             path: ['src/templates/']
         }))
         .on('error', function(err) {

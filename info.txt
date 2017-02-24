@@ -1,5 +1,11 @@
 https://mozilla.github.io/nunjucks/templating.html
 
+{% extends "layout.html" %} 
+{% set menuActive = {albums_4: 'current-menu-item current_page_item'} %} 
+{% set page = { title: 'Album Style Four' } %} 
+{% block content %}
+
+{% endblock %}
 
 {% set activeClass = "blog" %}
 {% include "bakery-header.html" %}
