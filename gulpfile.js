@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     nunjucksRender = require('gulp-nunjucks-render'), //do template
     plumber = require('gulp-plumber'), //show error on console
     path = require('path');
-    browserSync = require('browser-sync').create(), //browserSync
+browserSync = require('browser-sync').create(), //browserSync
     htmlbeautify = require('gulp-html-beautify'),
     cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'), //minify-js
@@ -99,7 +99,7 @@ gulp.task('sass', function() {
         // }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./src/lib/'))
-        .pipe(gulp.dest('./dist/css'))
+        .pipe(gulp.dest('./dist/assets/css'))
         .pipe(browserSync.stream()); //inject css
 });
 
@@ -115,7 +115,7 @@ gulp.task('nunjucks', function() {
     return gulp.src('src/pages/**/*.html')
         .pipe(plumber())
         .pipe(nunjucksRender({
-             data: loadData('src/templates/data/template_data.json'),
+            data: loadData('src/templates/data/template_data.json'),
             path: ['src/templates/']
         }))
         .on('error', function(err) {
@@ -137,7 +137,7 @@ gulp.task('watch', function() {
     });
     gulp.watch('src/sass/*.scss', ['sass']);
     gulp.watch(['src/pages/**/*.html', 'src/templates/**/*.html'], ['nunjucks']);
-    gulp.watch(['dist/js/*.js']).on('change', browserSync.reload);
+    gulp.watch(['dist/assets/js/*.js']).on('change', browserSync.reload);
     gulp.watch(['dist/*.html']).on('change', browserSync.reload);
 });
 
