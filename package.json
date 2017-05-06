@@ -15,12 +15,16 @@
     "gulp-clean-css": "^2.0.12",
     "gulp-html-beautify": "^1.0.1",
     "gulp-imagemin": "^3.1.1",
+    "imagemin-pngquant": "^5.0.0",
     "gulp-jshint": "^2.0.4",
     "gulp-plumber": "^1.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cache": "^0.4.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "jshint-stylish": "^2.2.1",
+    "del": "^2.2.0",
     "pump": "^1.0.1"
   },
   "dependencies": {
