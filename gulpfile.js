@@ -40,10 +40,10 @@ gulp.task('js', function () {
 });
 
 //sass
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     return gulp.src(`${sources.src}sass/style.scss`)
         .pipe(plumber())
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: 'expanded'
         }).on('error', sass.logError))
@@ -51,10 +51,7 @@ gulp.task('sass', function () {
             browsers: ['> 1%', 'last 15 versions'],
             cascade: true
         }))
-        // .pipe(combineMq({
-        //   beautify: true
-        // }))
-        // .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(`${sources.dist}assets/css`))
         .pipe(browserSync.stream()); //inject css
 });
@@ -93,10 +90,6 @@ gulp.task('watch', function () {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-// clear didt folder
-gulp.task('clean', function () {
-    return del.sync(`${sources.dist}*`);
-});
 
 // minify js
 gulp.task('min-js', function () {
@@ -126,7 +119,7 @@ gulp.task('image-min', function () {
         .pipe(cache(imagemin({
             interlaced: true,
             progressive: true,
-            optimizationLevel: 2,
+            optimizationLevel: 8,
             // svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         })))
@@ -135,29 +128,22 @@ gulp.task('image-min', function () {
 
 
 // build minify librarys file
-gulp.task('libs-js', function () {
+gulp.task('libs-js', function() {
     return gulp.src([
-            `!${sources.dist}assets/js/index.js`,
-            `!${sources.dist}assets/js/index.min.js`,
-            `${sources.dist}assets/js/jquery.min.js`,
-            `${sources.dist}assets/js/*.js`
+            `${sources.src}libs/**/jquery.min.js`,
+            `${sources.src}libs/**/*.js`
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(`${sources.dist}assets/js`));
 });
 
-gulp.task('libs-css', function () {
+gulp.task('libs-css', function() {
     return gulp.src([
-            `!${sources.dist}assets/css/style.css`,
-            `!${sources.dist}assets/css/style.min.css`,
-            `${sources.dist}assets/css/bootstrap.min.css`,
-            `${sources.dist}assets/css/*.css`
+            `${sources.src}libs/**/bootstrap.min.css`,
+            `${sources.src}libs/**/*.css`
         ])
         .pipe(concat('libs.min.css'))
-        .pipe(cleanCSS({
-            compatibility: 'ie9'
-        }))
         .pipe(gulp.dest(`${sources.dist}assets/css`));
 });
 
@@ -171,6 +157,11 @@ gulp.task('build', ['nunjucks', 'sass'], function () {
     var buildJs = gulp.src(`${sources.src}js/**/*.js`).pipe(gulp.dest(`${sources.dist}assets/js`));
 });
 
-///////////////////////////////////////////////////////////////////////////////////
+// clear dist folder
+gulp.task('clean', function() {
+    return del.sync(`${sources.dist}*`);
+});
+
+gulp.task('production', ['build',  'image-min', 'min-js', 'min-css', 'libs-js', 'libs-css']);
 
 gulp.task('default', ['build', 'watch']);
